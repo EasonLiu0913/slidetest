@@ -3,4 +3,5 @@
     width: 100%;
     margin: auto;
     transition: .5s;
+    will-change: transform;
 }
