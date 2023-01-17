@@ -1,0 +1,14 @@
+.myProducts {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-wrap {
+  width: 25%;
+}
+
+.img-wrap img {
+  width: 100%;
+  object-fit: cover;
+}
