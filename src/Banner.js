@@ -24,7 +24,9 @@ const Banner = forwardRef((props, ref) => {
   const changePage = (distance = 0) => {
     if (!getCurrent(dragDom)) return
     try {
-      getCurrent(dragDom).style.transform = `translate3d(${distance}px,0,0)`
+      getCurrent(
+        dragDom
+      ).style.transform = `perspective(1px) translate3d(${distance}px,0,0)`
     } catch (e) {
       console.log("changePage err:", e)
     }
