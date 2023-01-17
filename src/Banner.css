@@ -4,4 +4,5 @@
     margin: auto;
     transition: .5s;
     will-change: transform;
+    outline: 1px solid transparent;
 }
