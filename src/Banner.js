@@ -18,14 +18,17 @@ const Banner = forwardRef((props, ref) => {
   const indexRef = useRef(1)
   const maxCount = useRef(0)
   const maxWidth = useRef(0)
+  const dragFatherDomWidth = useRef(0)
   const autoPlay = useRef(true)
   const pathname = useRef("./images/")
+  const isTransition = useRef(false)
 
   const getCurrent = (ref) => ref.current
 
   const changePage = (distance = 0) => {
     if (!getCurrent(dragDom)) return
     try {
+      isTransition.current = true
       setDistance(distance)
       // getCurrent(dragDom).style.transform = `translateX(${distance}px)`
     } catch (e) {
@@ -63,6 +66,7 @@ const Banner = forwardRef((props, ref) => {
   //計算總數跟最大寬度
   useEffect(() => {
     if (bannerData.length === 0) return
+    dragFatherDomWidth.current = getCurrent(dragFatherDom).clientWidth
     maxCount.current = bannerData?.length ?? 0
     maxWidth.current = getCurrent(dragFatherDom).clientWidth * maxCount.current
   }, [bannerData?.length])
@@ -74,8 +78,18 @@ const Banner = forwardRef((props, ref) => {
     // setBannerData([...bannerData, { name: "c", img: "item-3.jpg" }])
   }
 
+  function handleTransitionEnd() {
+    isTransition.current = false
+  }
+
   return bannerData?.length === 0 ? null : (
-    <div ref={dragFatherDom}>
+    <div
+      ref={dragFatherDom}
+      onTransitionEnd={handleTransitionEnd}
+      style={{
+        width: isTransition ? maxWidth.current : dragFatherDomWidth.current,
+      }}
+    >
       {/* <button onClick={handleClick}>Click</button> */}
       <div
         className="baner-container"
