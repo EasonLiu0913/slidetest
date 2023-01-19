@@ -84,7 +84,7 @@ const Banner = forwardRef((props, ref) => {
       >
         {bannerData?.map((eachBanner, index) => (
           <PerBanner
-            key={index}
+            key={bannerData[index]}
             banner={eachBanner}
             pathname={pathname.current}
           />
