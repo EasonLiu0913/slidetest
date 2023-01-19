@@ -24,9 +24,9 @@ const Banner = forwardRef((props, ref) => {
   const changePage = (distance = 0) => {
     if (!getCurrent(dragDom)) return
     try {
-      getCurrent(
-        dragDom
-      ).style.transform = `translateX(${distance}px) rotate(1deg)`
+      setTimeout(() => {
+        getCurrent(dragDom).style.transform = `translateX(${distance}px)`
+      }, 100)
     } catch (e) {
       console.log("changePage err:", e)
     }
@@ -47,7 +47,7 @@ const Banner = forwardRef((props, ref) => {
       changePage(moveDistance * -1)
       //計算頁數
       indexRef.current++
-    }, 5000)
+    }, 3000)
     return () => {
       clearInterval(carouselBanner)
       changePage()
