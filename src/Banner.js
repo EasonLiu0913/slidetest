@@ -42,12 +42,10 @@ const Banner = forwardRef((props, ref) => {
       //輪播下一張圖
       let moveDistance
       if (getCurrent(indexRef) >= getCurrent(maxCount)) {
-        changePage(getCurrent(dragFatherDom).clientWidth * -1)
+        changePage(dragFatherDomWidth.current * -1)
         indexRef.current = 0
         return
-      } else
-        moveDistance =
-          getCurrent(dragFatherDom)?.clientWidth * getCurrent(indexRef)
+      } else moveDistance = dragFatherDomWidth.current * getCurrent(indexRef)
       changePage(moveDistance * -1)
       //計算頁數
       indexRef.current++
@@ -87,7 +85,7 @@ const Banner = forwardRef((props, ref) => {
       ref={dragFatherDom}
       onTransitionEnd={handleTransitionEnd}
       style={{
-        width: isTransition ? maxWidth.current : dragFatherDomWidth.current,
+        width: isTransition.current ? maxWidth.current : "100%",
       }}
     >
       {/* <button onClick={handleClick}>Click</button> */}
@@ -97,24 +95,24 @@ const Banner = forwardRef((props, ref) => {
         style={{ transform: `translateX(${distance}px)` }}
       >
         {/* {bannerData?.map((eachBanner, index) => ( */}
-        <div style={{ width: "100%", flexShrink: 0 }}>
+        <div style={{ width: dragFatherDomWidth.current, flexShrink: 0 }}>
           <img
             src={pathname.current + bannerData[0].img}
-            style={{ width: "100%" }}
+            style={{ width: dragFatherDomWidth.current }}
             alt=""
           />
         </div>
-        <div style={{ width: "100%", flexShrink: 0 }}>
+        <div style={{ width: dragFatherDomWidth.current, flexShrink: 0 }}>
           <img
             src={pathname.current + bannerData[1].img}
-            style={{ width: "100%" }}
+            style={{ width: dragFatherDomWidth.current }}
             alt=""
           />
         </div>
-        <div style={{ width: "100%", flexShrink: 0 }}>
+        <div style={{ width: dragFatherDomWidth.current, flexShrink: 0 }}>
           <img
             src={pathname.current + bannerData[2].img}
-            style={{ width: "100%" }}
+            style={{ width: dragFatherDomWidth.current }}
             alt=""
           />
         </div>
