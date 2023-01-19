@@ -32,7 +32,6 @@ const Banner = forwardRef((props, ref) => {
     if (!getCurrent(dragDom)) return
     try {
       isTransition.current = true
-
       // getCurrent(dragDom).style.transform = `translateX(${distance}px)`
     } catch (e) {
       console.log("changePage err:", e)
