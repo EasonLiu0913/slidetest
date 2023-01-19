@@ -9,7 +9,6 @@ const Banner = forwardRef((props, ref) => {
     { name: "b", img: "item-2.jpg" },
     { name: "c", img: "item-3.jpg" },
   ])
-  const [distanceArr, setDistanceArr] = useState([])
 
   const [distance, setDistance] = useState(0)
 
@@ -55,14 +54,7 @@ const Banner = forwardRef((props, ref) => {
         direction.current = 1
       }
 
-      // changePage(moveDistance)
       setDistance(moveDistance)
-
-      setDistanceArr(
-        bannerData.map((v, i) => {
-          return moveDistance + getCurrent(dragFatherDom).clientWidth * i
-        })
-      )
 
       //計算頁數
       indexRef.current += direction.current
@@ -76,11 +68,6 @@ const Banner = forwardRef((props, ref) => {
   }, [])
 
   useEffect(() => {
-    console.log("distanceArr", distanceArr)
-  }, [distanceArr])
-
-  useEffect(() => {
-    console.log("width", dragFatherDom.current)
     dragFatherDomWidth.current = getCurrent(dragFatherDom).clientWidth
     maxCount.current = bannerData.length - 1
   }, [bannerData])
@@ -95,8 +82,6 @@ const Banner = forwardRef((props, ref) => {
             distance={distance}
           />
         ))}
-        {/* {bannerData[0] && <PerBanner banner={bannerData[0]} />} */}
-        {/* {console.log("getCurrent(dragFatherDom)", dragFatherDom.current)} */}
       </div>
     </div>
   )
