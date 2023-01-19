@@ -10,6 +10,8 @@ const Banner = forwardRef((props, ref) => {
     { name: "c", img: "item-3.jpg" },
   ])
 
+  const [distance, setDistance] = useState(0)
+
   //輪播Banner
   const dragFatherDom = useRef()
   const dragDom = useRef(null)
@@ -24,9 +26,8 @@ const Banner = forwardRef((props, ref) => {
   const changePage = (distance = 0) => {
     if (!getCurrent(dragDom)) return
     try {
-      setTimeout(() => {
-        getCurrent(dragDom).style.transform = `translateX(${distance}px)`
-      }, 100)
+      setDistance(distance)
+      // getCurrent(dragDom).style.transform = `translateX(${distance}px)`
     } catch (e) {
       console.log("changePage err:", e)
     }
@@ -76,7 +77,11 @@ const Banner = forwardRef((props, ref) => {
   return bannerData?.length === 0 ? null : (
     <div ref={dragFatherDom} style={{ contain: "paint" }}>
       <button onClick={handleClick}>Click</button>
-      <div className="baner-container" ref={dragDom}>
+      <div
+        className="baner-container"
+        ref={dragDom}
+        style={{ transform: `translateX(${distance}px)` }}
+      >
         {bannerData?.map((eachBanner, index) => (
           <PerBanner
             key={index}
