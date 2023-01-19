@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect, forwardRef } from "react"
-import BannerStyled from "./BannerStyled"
 import PerBanner from "./PerBanner"
 import "./Banner.css"
 
@@ -18,11 +17,9 @@ const Banner = forwardRef((props, ref) => {
   const indexRef = useRef(0)
   const maxCount = useRef(0)
   const maxWidth = useRef(0)
-  const dragFatherDomWidth = useRef(0)
   const autoPlay = useRef(true)
-  const pathname = useRef("./images/")
-  const isTransition = useRef(false)
 
+  const pathname = useRef("./images/")
   const direction = useRef(1)
 
   const getCurrent = (ref) => ref.current
@@ -40,10 +37,6 @@ const Banner = forwardRef((props, ref) => {
   useEffect(() => {
     if (!bannerData?.length || !getCurrent(dragDom)) return
     const carouselBanner = setInterval(() => {
-      let moveDistance =
-        getCurrent(dragFatherDom).clientWidth * getCurrent(indexRef) * -1
-
-      console.log("setInterval", indexRef.current)
       //輪播下一張圖
 
       if (getCurrent(indexRef) >= getCurrent(maxCount)) {
@@ -54,13 +47,14 @@ const Banner = forwardRef((props, ref) => {
         direction.current = 1
       }
 
+      const moveDistance =
+        getCurrent(dragFatherDom).clientWidth * getCurrent(indexRef) * -1
       setDistance(moveDistance)
 
       //計算頁數
       indexRef.current += direction.current
     }, 3000)
     return () => {
-      console.log("clear setInterval", indexRef.current)
       clearInterval(carouselBanner)
       changePage()
       autoPlay.current = true
@@ -68,7 +62,6 @@ const Banner = forwardRef((props, ref) => {
   }, [])
 
   useEffect(() => {
-    dragFatherDomWidth.current = getCurrent(dragFatherDom).clientWidth
     maxCount.current = bannerData.length - 1
   }, [bannerData])
 
