@@ -9,13 +9,14 @@ const Banner = forwardRef((props, ref) => {
     { name: "b", img: "item-2.jpg" },
     { name: "c", img: "item-3.jpg" },
   ])
+  const [distanceArr, setDistanceArr] = useState([])
 
   const [distance, setDistance] = useState(0)
 
   //輪播Banner
   const dragFatherDom = useRef()
   const dragDom = useRef(null)
-  const indexRef = useRef(1)
+  const indexRef = useRef(0)
   const maxCount = useRef(0)
   const maxWidth = useRef(0)
   const dragFatherDomWidth = useRef(0)
@@ -23,13 +24,15 @@ const Banner = forwardRef((props, ref) => {
   const pathname = useRef("./images/")
   const isTransition = useRef(false)
 
+  const direction = useRef(1)
+
   const getCurrent = (ref) => ref.current
 
   const changePage = (distance = 0) => {
     if (!getCurrent(dragDom)) return
     try {
       isTransition.current = true
-      setDistance(distance)
+
       // getCurrent(dragDom).style.transform = `translateX(${distance}px)`
     } catch (e) {
       console.log("changePage err:", e)
@@ -39,85 +42,96 @@ const Banner = forwardRef((props, ref) => {
   useEffect(() => {
     if (!bannerData?.length || !getCurrent(dragDom)) return
     const carouselBanner = setInterval(() => {
+      let moveDistance =
+        getCurrent(dragFatherDom).clientWidth * getCurrent(indexRef) * -1
+
+      console.log("setInterval", indexRef.current)
       //輪播下一張圖
-      let moveDistance
+
       if (getCurrent(indexRef) >= getCurrent(maxCount)) {
-        changePage(getCurrent(dragFatherDom).clientWidth * -1)
-        indexRef.current = 0
-        return
-      } else
-        moveDistance =
-          getCurrent(dragFatherDom).clientWidth * getCurrent(indexRef)
-      changePage(moveDistance * -1)
+        direction.current = -1
+      }
+
+      if (getCurrent(indexRef) === 0) {
+        direction.current = 1
+      }
+
+      // changePage(moveDistance)
+      setDistance(moveDistance)
+
+      setDistanceArr(
+        bannerData.map((v, i) => {
+          return moveDistance + getCurrent(dragFatherDom).clientWidth * i
+        })
+      )
+
       //計算頁數
-      indexRef.current++
-    }, 8000)
+      indexRef.current += direction.current
+    }, 3000)
     return () => {
+      console.log("clear setInterval", indexRef.current)
       clearInterval(carouselBanner)
       changePage()
       autoPlay.current = true
     }
-  }, [JSON.stringify(bannerData)])
+  }, [])
+
+  useEffect(() => {
+    console.log("distanceArr", distanceArr)
+  }, [distanceArr])
 
   useEffect(() => {
     console.log("width", dragFatherDom.current)
+    dragFatherDomWidth.current = getCurrent(dragFatherDom).clientWidth
+    maxCount.current = bannerData.length - 1
   }, [bannerData])
 
-  //計算總數跟最大寬度
-  useEffect(() => {
-    if (bannerData.length === 0) return
-    dragFatherDomWidth.current = getCurrent(dragFatherDom).clientWidth
-    maxCount.current = bannerData?.length ?? 0
-    maxWidth.current = getCurrent(dragFatherDom).clientWidth * maxCount.current
-  }, [bannerData?.length])
-
-  function handleClick() {
-    console.log(dragFatherDom.current.clientWidth)
-    console.log(maxWidth.current)
-    console.log(maxCount.current)
-    // setBannerData([...bannerData, { name: "c", img: "item-3.jpg" }])
-  }
-
-  function handleTransitionEnd() {
-    isTransition.current = false
-  }
-
   return bannerData?.length === 0 ? null : (
-    <div
-      ref={dragFatherDom}
-      onTransitionEnd={handleTransitionEnd}
-      style={{ contain: "paint" }}
-    >
-      {/* <button onClick={handleClick}>Click</button> */}
-      <div
-        className="baner-container"
-        ref={dragDom}
-        style={{ transform: `translateX(${distance}px)` }}
-      >
+    <div ref={dragFatherDom} style={{ contain: "paint" }}>
+      <div className="baner-container" ref={dragDom}>
         {/* {bannerData?.map((eachBanner, index) => ( */}
         <div
           style={{
             width: dragFatherDomWidth.current,
             flexShrink: 0,
+            transform: `translateX(${distance}px)`,
           }}
         >
           <img
             src={pathname.current + bannerData[0].img}
-            style={{ width: dragFatherDomWidth.current }}
+            style={{
+              width: dragFatherDomWidth.current,
+            }}
             alt=""
           />
         </div>
-        <div style={{ width: dragFatherDomWidth.current, flexShrink: 0 }}>
+        <div
+          style={{
+            width: dragFatherDomWidth.current,
+            flexShrink: 0,
+            transform: `translateX(${distance}px)`,
+          }}
+        >
           <img
             src={pathname.current + bannerData[1].img}
-            style={{ width: dragFatherDomWidth.current }}
+            style={{
+              width: dragFatherDomWidth.current,
+            }}
             alt=""
           />
         </div>
-        <div style={{ width: dragFatherDomWidth.current, flexShrink: 0 }}>
+        <div
+          style={{
+            width: dragFatherDomWidth.current,
+            flexShrink: 0,
+            transform: `translateX(${distance}px)`,
+          }}
+        >
           <img
             src={pathname.current + bannerData[2].img}
-            style={{ width: dragFatherDomWidth.current }}
+            style={{
+              width: dragFatherDomWidth.current,
+            }}
             alt=""
           />
         </div>
