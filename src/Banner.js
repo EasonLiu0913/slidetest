@@ -42,14 +42,16 @@ const Banner = forwardRef((props, ref) => {
       //輪播下一張圖
       let moveDistance
       if (getCurrent(indexRef) >= getCurrent(maxCount)) {
-        changePage(dragFatherDomWidth.current * -1)
+        changePage(getCurrent(dragFatherDom).clientWidth * -1)
         indexRef.current = 0
         return
-      } else moveDistance = dragFatherDomWidth.current * getCurrent(indexRef)
+      } else
+        moveDistance =
+          getCurrent(dragFatherDom).clientWidth * getCurrent(indexRef)
       changePage(moveDistance * -1)
       //計算頁數
       indexRef.current++
-    }, 3000)
+    }, 8000)
     return () => {
       clearInterval(carouselBanner)
       changePage()
@@ -84,9 +86,7 @@ const Banner = forwardRef((props, ref) => {
     <div
       ref={dragFatherDom}
       onTransitionEnd={handleTransitionEnd}
-      style={{
-        width: isTransition.current ? maxWidth.current : "100%",
-      }}
+      style={{ contain: "paint" }}
     >
       {/* <button onClick={handleClick}>Click</button> */}
       <div
@@ -95,7 +95,12 @@ const Banner = forwardRef((props, ref) => {
         style={{ transform: `translateX(${distance}px)` }}
       >
         {/* {bannerData?.map((eachBanner, index) => ( */}
-        <div style={{ width: dragFatherDomWidth.current, flexShrink: 0 }}>
+        <div
+          style={{
+            width: dragFatherDomWidth.current,
+            flexShrink: 0,
+          }}
+        >
           <img
             src={pathname.current + bannerData[0].img}
             style={{ width: dragFatherDomWidth.current }}

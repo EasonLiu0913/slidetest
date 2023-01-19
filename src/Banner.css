@@ -2,7 +2,7 @@
     display: flex;
     width: 100%;
     margin: auto;
-    transition: 3s;
+    transition: 3s linear .5s;
     will-change: transition;
     /* outline: 1px solid transparent;
     -webkit-transform-style: flat;
