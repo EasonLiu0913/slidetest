@@ -82,13 +82,29 @@ const Banner = forwardRef((props, ref) => {
         ref={dragDom}
         style={{ transform: `translateX(${distance}px)` }}
       >
-        {bannerData?.map((eachBanner, index) => (
-          <PerBanner
-            key={bannerData[index]}
-            banner={eachBanner}
-            pathname={pathname.current}
+        {/* {bannerData?.map((eachBanner, index) => ( */}
+        <div style={{ width: "100%", flexShrink: 0 }}>
+          <img
+            src={pathname.current + bannerData[0].img}
+            style={{ width: "100%" }}
+            alt=""
           />
-        ))}
+        </div>
+        <div style={{ width: "100%", flexShrink: 0 }}>
+          <img
+            src={pathname.current + bannerData[1].img}
+            style={{ width: "100%" }}
+            alt=""
+          />
+        </div>
+        <div style={{ width: "100%", flexShrink: 0 }}>
+          <img
+            src={pathname.current + bannerData[2].img}
+            style={{ width: "100%" }}
+            alt=""
+          />
+        </div>
+        {/* ))} */}
         {/* {bannerData[0] && <PerBanner banner={bannerData[0]} />} */}
         {/* {console.log("getCurrent(dragFatherDom)", dragFatherDom.current)} */}
       </div>
