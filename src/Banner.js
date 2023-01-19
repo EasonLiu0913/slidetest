@@ -75,7 +75,7 @@ const Banner = forwardRef((props, ref) => {
   }
 
   return bannerData?.length === 0 ? null : (
-    <div ref={dragFatherDom} style={{ contain: "paint" }}>
+    <div ref={dragFatherDom}>
       {/* <button onClick={handleClick}>Click</button> */}
       <div
         className="baner-container"
