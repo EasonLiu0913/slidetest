@@ -88,53 +88,13 @@ const Banner = forwardRef((props, ref) => {
   return bannerData?.length === 0 ? null : (
     <div ref={dragFatherDom} style={{ contain: "paint" }}>
       <div className="baner-container" ref={dragDom}>
-        {/* {bannerData?.map((eachBanner, index) => ( */}
-        <div
-          style={{
-            width: dragFatherDomWidth.current,
-            flexShrink: 0,
-            transform: `translateX(${distance}px)`,
-          }}
-        >
-          <img
-            src={pathname.current + bannerData[0].img}
-            style={{
-              width: dragFatherDomWidth.current,
-            }}
-            alt=""
+        {bannerData?.map((eachBanner, index) => (
+          <PerBanner
+            banner={eachBanner}
+            pathname={pathname.current}
+            distance={distance}
           />
-        </div>
-        <div
-          style={{
-            width: dragFatherDomWidth.current,
-            flexShrink: 0,
-            transform: `translateX(${distance}px)`,
-          }}
-        >
-          <img
-            src={pathname.current + bannerData[1].img}
-            style={{
-              width: dragFatherDomWidth.current,
-            }}
-            alt=""
-          />
-        </div>
-        <div
-          style={{
-            width: dragFatherDomWidth.current,
-            flexShrink: 0,
-            transform: `translateX(${distance}px)`,
-          }}
-        >
-          <img
-            src={pathname.current + bannerData[2].img}
-            style={{
-              width: dragFatherDomWidth.current,
-            }}
-            alt=""
-          />
-        </div>
-        {/* ))} */}
+        ))}
         {/* {bannerData[0] && <PerBanner banner={bannerData[0]} />} */}
         {/* {console.log("getCurrent(dragFatherDom)", dragFatherDom.current)} */}
       </div>
