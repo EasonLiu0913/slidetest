@@ -10,5 +10,5 @@
 }
 
 .baner-container > div{
-    transition: 1s ease-in;
+    transition: 1s ease-out;
 }
