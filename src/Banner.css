@@ -2,11 +2,6 @@
     display: flex;
     width: 100%;
     margin: auto;
-    
-    will-change: transition;
-    /* outline: 1px solid transparent;
-    -webkit-transform-style: flat;
-    transform-style: flat; */
 }
 
 .baner-container > div{
